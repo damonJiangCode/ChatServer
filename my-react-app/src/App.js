@@ -7,7 +7,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Welcome to the Chat Server!<br></br>
+          You can choose the channels you would like to share your reviews with!
+
         </p>
         <a
           className="App-link"
