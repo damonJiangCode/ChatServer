@@ -4,11 +4,12 @@ import './index.css';
 // import App from './App';
 import LogIn from './LogIn';
 import reportWebVitals from './reportWebVitals';
+import Welcome from './Welcome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <LogIn />
+    <Welcome />
   </React.StrictMode>
 );
 
