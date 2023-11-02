@@ -1,4 +1,5 @@
 # ChatServer
+Prototype: https://www.figma.com/file/rMG7DDmx3HYFGvYs2lanU3/Untitled?type=design&node-id=0%3A1&mode=design&t=JYpNUEi4IbcgPR9k-1
 
 The chat server is implemented by using Nodejs, MySQL and ReactJs.
 
