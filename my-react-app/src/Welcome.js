@@ -1,29 +1,29 @@
 import { Outlet, Link } from "react-router-dom";
+import './Welcome.css';
 
 function Welcome() {
   return (
     <div>
 
       <nav>
-        <ul>
 
-          <li>
             <p>
               Welcome to the Chat Server!
               <br/>
               You can choose the channels you would like to share your reviews with!
+              <br/>
+              <br/>
+              <br/>
             </p>
-          </li>
 
-          <li>
-            <Link to="/SignUp">Sign Up</Link>
-          </li>
+            <Link to="/SignUp" className="SignUp">Sign Up
+              <br/>
+              <br/>
+            </Link>
+          
 
-          <li>
             <Link to="/LogIn">Log In</Link>
-          </li>
 
-        </ul>
       </nav>
 
       <Outlet />
