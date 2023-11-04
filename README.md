@@ -19,3 +19,4 @@ Terminal:
 
 - npm install react-router-dom
 - npm start
+- npm install express mysql body-parser cors
