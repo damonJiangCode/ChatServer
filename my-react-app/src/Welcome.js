@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
-import './Welcome.css';
+import { Outlet, Link } from "react-router-dom";
 
-const Welcome = () => {
-
+function Welcome() {
   return (
     <div>
-        <p>
-          Welcome to the Chat Server!<br></br>
-          You can choose the channels you would like to share your reviews with!
-        </p>
 
-        <button className='SignUp'>Sign up</button>
-        <button className='SignUp'>Log in</button>
+      <nav>
+        <ul>
+
+          <li>
+            <p>
+              Welcome to the Chat Server!
+              <br/>
+              You can choose the channels you would like to share your reviews with!
+            </p>
+          </li>
+
+          <li>
+            <Link to="/SignUp">Sign Up</Link>
+          </li>
+
+          <li>
+            <Link to="/LogIn">Log In</Link>
+          </li>
+
+        </ul>
+      </nav>
+
+      <Outlet />
     </div>
-  );
+  )
 };
 
 export default Welcome;

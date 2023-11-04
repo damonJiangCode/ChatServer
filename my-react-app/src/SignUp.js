@@ -1,10 +1,10 @@
-import './LogIn.css';
+import './SignUp.css';
 
-function LogIn() {
+function SignUp() {
   return (
     <div>
       <p>
-        Log In Page
+        Sign Up Page
       </p>
     </div>
   );
@@ -65,4 +65,4 @@ function LogIn() {
 //   );
 // };
 
-export default LogIn;
+export default SignUp;
