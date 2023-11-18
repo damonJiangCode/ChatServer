@@ -1,47 +1,48 @@
- .container {
-    background-color: bisque;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-  }
-  
- .welcomeContainer {
-    background-color:antiquewhite; 
-    padding: 20px;
-    border-radius: 15px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    text-align: center;
-  }
-  
-  .welcomeText {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .linkContainer {
-    background-color: bisque;
-    display: flex;
-    flex-direction: row;
-  }
+.container {
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; 
+}
 
-  .button {
-    background-color:antiquewhite; 
-    padding: 5px;
-    border-radius: 10px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    text-align: center;
-    margin: 0 150px
-  }
+.welcomeContainer {
+  background-color:antiquewhite; 
+  padding: 20px;
+  border-radius: 15px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.welcomeText {
+  font-size: 25px;
+  color: #333;
+}
+
+.linkContainer {
+  background-color: bisque;
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  background-color:#007bff; 
   
-  .signUp, .logIn {
-    text-decoration: none;
-    color: #007bff; /* Set the link color */
-    font-weight: bold;
-  }
-  
-  .signUp:hover, .logIn:hover {
-    text-decoration: underline;
-  }
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px; 
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 150px
+}
+
+.signUp, .logIn {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.signUp:hover, .logIn:hover {
+  background-color: #0056b3;
+}
   
