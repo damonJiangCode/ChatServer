@@ -33,6 +33,7 @@ function SignUp() {
 
   return (
     <div className='container'>
+      <label className='signUpText'>Sign Up</label>
       <form className='form' onSubmit={handleSubmit}>
 
         <label>

@@ -7,6 +7,10 @@
     height: 100vh;
 }
 
+.signUpText {
+    font-size: 50px;
+    font-weight: bolder;
+}
 .form {
     background-color: antiquewhite;
     padding: 20px;
