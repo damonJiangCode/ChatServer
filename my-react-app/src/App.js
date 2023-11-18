@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from './Welcome';
 import SignUp from './SignUp';
 import LogIn from './LogIn';
@@ -8,15 +8,18 @@ import LogIn from './LogIn';
 function App() {
   return (
     <div className='App'>
-        <BrowserRouter>
+
+        <Router>
+
           <Routes>
-            <Route path="/" element={<Welcome />}>
-              {/* <Route index element={<Welcome />} /> */}
-              <Route path="/SignUp" element={<SignUp />} />
-              <Route path="/LogIn" element={<LogIn />} />
-            </Route>
+
+            <Route path="/" element={<Welcome />}/>
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/LogIn" element={<LogIn />} />
+            
           </Routes>
-        </BrowserRouter>
+
+        </Router>
 
     </div>
   );

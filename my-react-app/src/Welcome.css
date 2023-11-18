@@ -1,0 +1,47 @@
+ .container {
+    background-color: bisque;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+  }
+  
+ .welcomeContainer {
+    background-color:antiquewhite; 
+    padding: 20px;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+  }
+  
+  .welcomeText {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .linkContainer {
+    background-color: bisque;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .button {
+    background-color:antiquewhite; 
+    padding: 5px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    text-align: center;
+    margin: 0 150px
+  }
+  
+  .signUp, .logIn {
+    text-decoration: none;
+    color: #007bff; /* Set the link color */
+    font-weight: bold;
+  }
+  
+  .signUp:hover, .logIn:hover {
+    text-decoration: underline;
+  }
+  

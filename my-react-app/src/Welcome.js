@@ -3,30 +3,30 @@ import './Welcome.css';
 
 function Welcome() {
   return (
-    <div>
+    <div className="container">
 
-      <nav>
-
-            <p>
+      <div className="welcomeContainer">
+            <p className="welcomeText">
               Welcome to the Chat Server!
+              <br/>
               <br/>
               You can choose the channels you would like to share your reviews with!
               <br/>
-              <br/>
-              <br/>
             </p>
+      </div>
 
-            <Link to="/SignUp" className="SignUp">Sign Up
-              <br/>
-              <br/>
-            </Link>
-          
-
-            <Link to="/LogIn">Log In</Link>
-
-      </nav>
-
-      <Outlet />
+      <br/>
+      <br/>
+      
+      <div className="linkContainer">
+        <div className="button">
+          <Link to="/SignUp" className="signUp">Sign Up</Link>
+        </div>
+        <div className="button">
+          <Link to="/LogIn" className="logIn">Log In</Link>
+        </div>
+      </div>
+    
     </div>
   )
 };
