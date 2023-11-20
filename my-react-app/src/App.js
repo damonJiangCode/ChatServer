@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Welcome from './Welcome';
-import SignUp from './SignUp';
-import LogIn from './LogIn';
+import Welcome from './welcome/Welcome';
+import SignUp from './signUp/SignUp';
+import LogIn from './logIn/LogIn';
 
 
 function App() {
