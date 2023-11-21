@@ -2,7 +2,9 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from './welcome/Welcome';
 import SignUp from './signUp/SignUp';
-import LogIn from './logIn/LogIn';
+import ChatChannel from './chat/ChatChannel';
+// import LogIn from './logIn/LogIn';
+
 
 
 function App() {
@@ -14,8 +16,9 @@ function App() {
           <Routes>
 
             <Route path="/" element={<Welcome />}/>
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/LogIn" element={<LogIn />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/logIn" element={<SignUp />} />
+            <Route path="/chat" element={<ChatChannel />} />
             
           </Routes>
 
