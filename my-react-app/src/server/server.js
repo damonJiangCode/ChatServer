@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // Middleware for handling Cross-Origin Resource Sharing.
 const cors = require('cors');
 // A Node.js driver for MySQL
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 
 const app = express();
 
