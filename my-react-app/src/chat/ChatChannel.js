@@ -1,4 +1,5 @@
 // ChatChannel.js
+// test for mac   damonjiangwork
 
 import React, { useState, useEffect } from 'react';
 import './ChatChannel.css';
