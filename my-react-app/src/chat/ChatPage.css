@@ -1,56 +1,14 @@
 .chat-page-container {
     display: flex;
     background-color: white;
+    height: 100vh;
 }
 
-.chat-channels-container {
-    flex: 1;
-    background-color: antiquewhite;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
 .chat-comments-container {
-    flex: 3;
-    background-color: antiquewhite;
+    flex: 5;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* border-radius: 15px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
-
-
-
-ChatPage.css
-
-.chat-page-container {
-    display: flex;
-    background-color: white;
-}
-
-.chat-channels-container {
-    flex: 1;
-}
-
-/* Style for each individual channel */
-.channel-item {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Active (selected) channel style */
-.channel-item.active {
-    background-color: #a0c4ff;
-    /* Set the background color for the active channel */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    /* Add a shadow for the active channel */
-}
-
-/* Hover effect for each channel */
-.channel-item:hover {
-    background-color: #e0e0e0;
-    /* Set the background color for the hovered channel */
-}

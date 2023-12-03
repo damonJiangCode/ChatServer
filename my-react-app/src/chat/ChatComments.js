@@ -1,38 +1,50 @@
 // ChatComments.js
+import "./ChatComments.css";
+// ChatComments.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 const ChatComments = ({ selectedChannel }) => {
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState(''); // State to hold the new comment input
 
   useEffect(() => {
-    console.log("SELECTED CHANNEL: ", selectedChannel);
     // Fetch comments for the selected channel (you may use your WebSocket logic here)
-    // For example, you might have an API endpoint to get comments based on the selected channel
     if (selectedChannel) {
       setComments([
-        { userName: "aaaa", text: "text" },
-        { userName: "usernameb", text: "text2" },
+        { userName: 'aaaa', text: 'text' },
+        { userName: 'usernameb', text: 'text2' },
       ]);
-      // Fetch comments for the selected channel and update the state
-      // Example: fetchcomments(selectedChannel).then(data => setcomments(data));
     }
   }, [selectedChannel]);
 
+  const handleSubmit = () => {
+    // Logic to handle the submission of a new comment
+    // This could involve sending it to the backend or adding it to the comments state
+    console.log(newComment); // For now, just log it to the console
+    setNewComment(''); // Clear the input after submission
+  };
+
   return (
     <div className="chat-comments-container">
-      <div className="selected-channel">
-        {selectedChannel
-          ? `comments in ${selectedChannel}`
-          : "Select a channel"}
-      </div>
+      <h3 className="selected-channel">{selectedChannel ? `comments in ${selectedChannel}` : 'Select a channel'}</h3>
       <div className="comments-list">
         {comments.map((comment, index) => (
           <div key={index} className="comment">
-            <div className="user-id">{comment.userName}</div>
-            <div className="comment-text">{comment.text}</div>
+            <span className="user-id">{comment.userName +":"}</span>
+            <span className="comment-text">{comment.text}</span>
           </div>
         ))}
+      </div>
+      <div className="new-comment">
+        <input
+          type="text"
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Write a message..."
+          className="new-comment-input"
+        />
+        <button onClick={handleSubmit} className="submit-comment">Send</button>
       </div>
     </div>
   );
