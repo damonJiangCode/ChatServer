@@ -1,53 +1,93 @@
-// Web application framework for Node.js.
-const express = require('express');
-// Middleware to parse the request body.
-const bodyParser = require('body-parser');
-// Middleware for handling Cross-Origin Resource Sharing.
-const cors = require('cors');
-// A Node.js driver for MySQL
-// const mysql = require('mysql2');
+// server.js
+
+const express = require("express");
+const mysql = require("mysql2");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
+const port = 3001; // Choose a port for your server
 
-// Middleware setup
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Create a connection to the MySQL database
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "admin",
+  database: "chatserver",
+});
+
+// Connect to the database
+db.connect((err) => {
+  if (err) {
+    console.error("Error connecting to MySQL:", err);
+    return;
+  }
+  console.log("Connected to MySQL");
+});
+
+// Use body-parser middleware to parse JSON requests
 app.use(bodyParser.json());
+app.use(cors());
 
-// // database credentials
-// const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'admin',
-//   });
+app.post("/signup", (req, res) => {
+  const { username, password, email } = req.body;
+  // console.log(req.body);
 
-// // connect db
-// db.connect((err) => {
-//     if (err) {
-//         console.error('Error connecting to MySQL:', err);
-//     } else {
-//         console.log('Connected to MySQL');
-//     }
-// });
+  // Check if the username already exists
+  const checkUserSql = "SELECT * FROM users WHERE username = ?";
+  db.query(checkUserSql, [username], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error("Error checking user existence:", checkErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
 
-// // Start the server
-// const port = process.env.PORT || 5000;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+    // If the result is not empty, the username already exists
+    if (checkResult.length > 0) {
+      res.status(400).json({ error: "Username already exists" });
+      return;
+    }
+  });
 
-// module.exports = db;
+  // Insert data into the users table
+  const sql = "INSERT INTO users (username, email, pin) VALUES (?, ?, ?)";
+  db.query(sql, [username, email, password], (err, result) => {
+    if (err) {
+      console.error("Error inserting data into users table:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    console.log("Data inserted into users table:", result);
+    res.status(200).json({ success: true });
+  });
+});
 
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
 
-// import connection from './dbConnection'
+  const checkUserSql = "SELECT * FROM users WHERE username = ?";
+  db.query(checkUserSql, [username], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error("Error checking user existence:", checkErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
 
-// if (connection === 1) {
-//   // check sign in cretendentials
-//   console.log('COnnection succedds!');
+    if (checkResult.length !== 1) {
+      res.status(400).json({ error: "Username does not exist" });
+      return;
+    }
 
-// } else {
-//   console.log('Failed to connect to db!');
-// }
+    console.log(
+      "Data from database: ",
+      checkResult,
+      "and password: ",
+      password
+    );
+    res.status(200).json({ success: true });
+  });
+});
 
-
-
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

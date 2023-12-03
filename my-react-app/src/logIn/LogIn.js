@@ -1,10 +1,12 @@
-import './LogIn.css';
-import React, { useState } from 'react';
+import "./LogIn.css";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LogIn() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
   const handleInputChange = (e) => {
@@ -15,25 +17,47 @@ function LogIn() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.password) {
-      alert('Invalid input!');
+      alert("Invalid input!");
       setFormData({
-        username: '',
-        password: '',
+        username: "",
+        password: "",
       });
     } else {
-      // check info from database
-      console.log('Data from user: ', formData);
+      try {
+        const response = await fetch("http://localhost:3001/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          console.log("Found The User");
+          navigate("/chat", {
+            state: { username: formData.username, email: formData.email },
+          });
+        } else {
+          if (response.status === 400) {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error}`);
+          } else {
+            console.error("Failed to submit data");
+          }
+        }
+      } catch (error) {
+        console.error("Error during data submission:", error);
+      }
     }
   };
 
   return (
-    <div className='container'>
-      <label className='logInText'>Log In</label>
-      <form className='form' onSubmit={handleSubmit}>
-
+    <div className="container">
+      <label className="logInText">Log In</label>
+      <form className="form" onSubmit={handleSubmit}>
         <label>
           Username:
           <input
@@ -56,8 +80,9 @@ function LogIn() {
         </label>
         <br />
 
-        <button className='button' type="submit">Submit</button>
-
+        <button className="button" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
