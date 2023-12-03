@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -22,7 +21,20 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.passwordCheck) {
+    if (
+      !formData.username ||
+      !formData.password ||
+      !formData.email ||
+      !formData.passwordCheck
+    ) {
+      alert("Invalid input!");
+      setFormData({
+        username: "",
+        email: "",
+        passwordCheck: "",
+        password: "",
+      });
+    } else if (formData.password !== formData.passwordCheck) {
       alert("Passwords do not match!");
       setFormData({
         ...formData,
@@ -31,7 +43,6 @@ function SignUp() {
       });
     } else {
       try {
-        // Make a POST request to the server
         const response = await fetch("http://localhost:3001/signup", {
           method: "POST",
           headers: {
@@ -42,13 +53,11 @@ function SignUp() {
 
         if (response.ok) {
           console.log("Data successfully submitted");
-          // Optionally, you can redirect the user or perform other actions
           alert(`Sign Up Successfully`);
           navigate("/chat", {
             state: { username: formData.username, email: formData.email },
           });
         } else {
-          // Check if the response status is 400 (Bad Request)
           if (response.status === 400) {
             const errorData = await response.json();
             alert(`Error: ${errorData.error}`);
