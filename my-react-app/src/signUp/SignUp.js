@@ -78,6 +78,17 @@ function SignUp() {
         <br />
 
         <label>
+          email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+
+        <label>
           Password:
           <input
             type="password"
@@ -94,17 +105,6 @@ function SignUp() {
             type="password"
             name="passwordCheck"
             value={formData.passwordCheck}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-
-        <label>
-          email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
             onChange={handleInputChange}
           />
         </label>
