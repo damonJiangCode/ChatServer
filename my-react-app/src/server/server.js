@@ -94,6 +94,22 @@ app.post("/chatchannels", (req, res) => {
   });
 });
 
+app.post("/addchannel", (req, res) => {
+  const { newChannel } = req.body;
+
+  console.log(newChannel, "\n");
+  const addChannelSql = "INSERT INTO chatchannels (channel) VALUES (?)";
+  db.query(addChannelSql, [newChannel], (addCahnnelErr, addChannelResult) => {
+    if (addCahnnelErr) {
+      console.log("Error: searching chat channels:", addCahnnelErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    console.log("Data from database: ", addChannelResult);
+    res.status(200).json({ success: "Add Channel Successfully" });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

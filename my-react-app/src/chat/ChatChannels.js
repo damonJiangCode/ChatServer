@@ -37,9 +37,29 @@ const ChatChannels = ({ onSelect }) => {
     if (newChannel) {
       setChannels((prevChannels) => [...prevChannels, { channel: newChannel }]);
       setNewChannel("");
-      // TO DO: fetch new channel to DB
+      const fetchAddChannel = async () => {
+        try {
+          const response = await fetch("http://localhost:3001/addchannel", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ newChannel }),
+          });
+
+          if (response.status === 200) {
+            const addChannelResponseFromServer = await response.json();
+            alert(addChannelResponseFromServer.success);
+          }
+        } catch (error) {
+          console.error("Error during add channels submission:", error);
+        }
+      };
+      fetchAddChannel();
     }
+    alert("Invalid Inputs");
   };
+
   return (
     <div className="chat-channels-container">
       <h1>Chat Channel</h1>
