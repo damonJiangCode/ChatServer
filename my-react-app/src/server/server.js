@@ -89,7 +89,7 @@ app.post("/chatchannels", (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
       return;
     }
-    console.log("Data from database: ", channels);
+    // console.log("Data from database: ", channels);
     res.status(200).json(channels);
   });
 });

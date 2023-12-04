@@ -56,8 +56,9 @@ const ChatChannels = ({ onSelect }) => {
         }
       };
       fetchAddChannel();
+    } else {
+      alert("Invalid Inputs");
     }
-    alert("Invalid Inputs");
   };
 
   return (

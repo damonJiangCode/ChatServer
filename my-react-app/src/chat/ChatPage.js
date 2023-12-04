@@ -1,17 +1,15 @@
 // ChatPage.js
 import "./ChatPage.css";
 import React, { useState } from "react";
-// import { useLocation } from "react-router-dom";
 import ChatChannels from "./ChatChannels";
 import ChatComments from "./ChatComments";
 
 function ChatPage() {
-  // const { state } = useLocation();
   const [selectedChannel, setSelectedChannel] = useState(null);
-  // const yourPropValue = state?.yourPropName;
 
   const handleChannelSelect = (channel) => {
     setSelectedChannel(channel);
+    // console.log("channel: ", channel, typeof channel);
   };
 
   return (
