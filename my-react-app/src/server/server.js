@@ -6,9 +6,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const port = 3001; // Choose a port for your server
+app.use(bodyParser.json());
+app.use(cors());
+const port = 3001;
 
-// Create a connection to the MySQL database
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -23,9 +24,6 @@ db.connect((err) => {
   }
   console.log("Connected to MySQL");
 });
-
-app.use(bodyParser.json());
-app.use(cors());
 
 app.post("/signup", (req, res) => {
   const { username, password, email } = req.body;
@@ -77,6 +75,22 @@ app.post("/login", (req, res) => {
       password
     );
     res.status(200).json({ success: true });
+  });
+});
+
+app.post("/chatchannels", (req, res) => {
+  const data = req.body;
+
+  console.log(data.action, "\n");
+  const getChannelsSql = "SELECT channel FROM chatchannels";
+  db.query(getChannelsSql, (dbErr, channels) => {
+    if (dbErr) {
+      console.log("Error: searching chat channels:", dbErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    console.log("Data from database: ", channels);
+    res.status(200).json(channels);
   });
 });
 

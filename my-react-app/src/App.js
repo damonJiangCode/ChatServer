@@ -4,6 +4,7 @@ import Welcome from "./welcome/Welcome";
 import SignUp from "./signUp/SignUp";
 import ChatPage from "./chat/ChatPage";
 import LogIn from "./logIn/LogIn";
+// import ChatChannels from "./chat/ChatChannels";
 
 function App() {
   return (
