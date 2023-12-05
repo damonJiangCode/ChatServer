@@ -6,9 +6,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const port = 3001; // Choose a port for your server
+app.use(bodyParser.json());
+app.use(cors());
+const port = 3001;
 
-// Create a connection to the MySQL database
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -16,7 +17,6 @@ const db = mysql.createConnection({
   database: "chatserver",
 });
 
-// Connect to the database
 db.connect((err) => {
   if (err) {
     console.error("Error connecting to MySQL:", err);
@@ -25,15 +25,9 @@ db.connect((err) => {
   console.log("Connected to MySQL");
 });
 
-// Use body-parser middleware to parse JSON requests
-app.use(bodyParser.json());
-app.use(cors());
-
 app.post("/signup", (req, res) => {
   const { username, password, email } = req.body;
-  // console.log(req.body);
 
-  // Check if the username already exists
   const checkUserSql = "SELECT * FROM users WHERE username = ?";
   db.query(checkUserSql, [username], (checkErr, checkResult) => {
     if (checkErr) {
@@ -41,24 +35,20 @@ app.post("/signup", (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
       return;
     }
-
-    // If the result is not empty, the username already exists
     if (checkResult.length > 0) {
       res.status(400).json({ error: "Username already exists" });
       return;
     }
-  });
-
-  // Insert data into the users table
-  const sql = "INSERT INTO users (username, email, pin) VALUES (?, ?, ?)";
-  db.query(sql, [username, email, password], (err, result) => {
-    if (err) {
-      console.error("Error inserting data into users table:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
-    console.log("Data inserted into users table:", result);
-    res.status(200).json({ success: true });
+    const sql = "INSERT INTO users (username, email, pin) VALUES (?, ?, ?)";
+    db.query(sql, [username, email, password], (err, res) => {
+      if (err) {
+        console.error("Error inserting data into users table:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      console.log("Data inserted into users table:", res);
+      res.status(200).json({ success: true });
+    });
   });
 });
 
@@ -85,6 +75,38 @@ app.post("/login", (req, res) => {
       password
     );
     res.status(200).json({ success: true });
+  });
+});
+
+app.post("/chatchannels", (req, res) => {
+  const data = req.body;
+
+  console.log(data.action, "\n");
+  const getChannelsSql = "SELECT channel FROM chatchannels";
+  db.query(getChannelsSql, (dbErr, channels) => {
+    if (dbErr) {
+      console.log("Error: searching chat channels:", dbErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    console.log("Data from database: ", channels);
+    res.status(200).json(channels);
+  });
+});
+
+app.post("/addchannel", (req, res) => {
+  const { newChannel } = req.body;
+
+  console.log(newChannel, "\n");
+  const addChannelSql = "INSERT INTO chatchannels (channel) VALUES (?)";
+  db.query(addChannelSql, [newChannel], (addCahnnelErr, addChannelResult) => {
+    if (addCahnnelErr) {
+      console.log("Error: searching chat channels:", addCahnnelErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    console.log("Data from database: ", addChannelResult);
+    res.status(200).json({ success: "Add Channel Successfully" });
   });
 });
 
