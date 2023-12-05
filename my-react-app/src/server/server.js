@@ -99,32 +99,43 @@ app.post("/addchannel", (req, res) => {
 
   console.log(newChannel, "\n");
   const addChannelSql = "INSERT INTO chatchannels (channel) VALUES (?)";
-  db.query(addChannelSql, [newChannel], (addCahnnelErr, addChannelResult) => {
+  db.query(addChannelSql, [newChannel], (addCahnnelErr, addChannelRes) => {
     if (addCahnnelErr) {
       console.log("Error: searching chat channels:", addCahnnelErr);
       res.status(500).json({ error: "Internal Server Error" });
       return;
     }
-    console.log("Data from database: ", addChannelResult);
+    console.log("Data from database: ", addChannelRes);
     res.status(200).json({ success: "Add Channel Successfully" });
   });
 });
 
 app.post("/sendMessage", (req, res) => {
-  const { userName, message, timeStamp, channelName } = req.body;
+  const { userName, message, channelName } = req.body;
 
   console.log(
     "USERNAME: ",
     userName,
     "\nMESSAGE: ",
     message,
-    "\nTIMESTAMP: ",
-    timeStamp,
     "\nCHANNELNAME: ",
     channelName
   );
   const addMessageSql =
-    "INSERT INTO chatmessages (userName, message, timeStamp, channelName) VALUES (?. ?, ?, ?)";
+    "INSERT INTO chatmessages (userName, message, timeStamp, channelName) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";
+  db.query(
+    addMessageSql,
+    [userName, message, channelName],
+    (addMEssageErr, addMessageRes) => {
+      if (addMEssageErr) {
+        console.log("Error: adding message:", addMEssageErr);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      console.log("Data from database: ", addMessageRes);
+      res.status(200).json({ success: "Add Message Successfully" });
+    }
+  );
 });
 
 app.listen(port, () => {

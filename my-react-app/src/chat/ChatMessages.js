@@ -3,25 +3,48 @@
 import "./ChatMessages.css";
 import React, { useState, useEffect } from "react";
 
-const ChatMessages = ({ selectedChannel }) => {
+const ChatMessages = (props) => {
+  let selectedChannel = props.selectedChannel;
+  let user = props.userName;
+  // console.log(user);
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState(""); // State to hold the new comment input
-
+  const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
-    // Fetch comments for the selected channel (you may use your WebSocket logic here)
     if (selectedChannel) {
-      setMessages([
-        { userName: "aaaa", text: "text" },
-        { userName: "usernameb", text: "text2" },
-      ]);
+      // console.log(selectedChannel);
+      setMessages([{ userName: "default user", text: "default text" }]);
     }
   }, [selectedChannel]);
 
-  const handleSubmit = () => {
-    // Logic to handle the submission of a new comment
-    // This could involve sending it to the backend or adding it to the comments state
-    console.log(newMessage); // For now, just log it to the console
-    setNewMessage(""); // Clear the input after submission
+  const handleSubmit = async () => {
+    console.log(newMessage);
+    await fetch("http://localhost:3001/sendMessage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userName: user,
+        message: newMessage,
+        channelName: selectedChannel,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error("Failed to Add Message");
+        }
+      })
+      .then((addMessageResponse) => {
+        console.log(addMessageResponse);
+        setMessages([...messages, { userName: user, text: newMessage }]);
+      })
+      .catch((error) => {
+        console.error("Error during add messages submission:", error);
+      });
+
+    setNewMessage("");
   };
 
   return (

@@ -38,7 +38,7 @@ function LogIn() {
         if (response.ok) {
           console.log("Found The User");
           navigate("/chat", {
-            state: { username: formData.username, email: formData.email },
+            state: { username: formData.username },
           });
         } else {
           if (response.status === 400) {
