@@ -11,13 +11,47 @@ const ChatMessages = (props) => {
   const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
     if (selectedChannel) {
+      const fetchMessagesData = async () => {
+        await fetch("http://localhost:3001/getMessage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ channelName: selectedChannel }),
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              throw new Error("Failed to Add Message");
+            }
+          })
+          .then((getMessageResponse) => {
+            console.log(getMessageResponse);
+            const formattedMessages = getMessageResponse.map((message) => ({
+              userName: message.userName,
+              timeStamp: message.tStamp, // Adjust this if the format is different
+              message: message.message,
+            }));
+            setMessages(formattedMessages);
+          })
+          .catch((error) => {
+            console.error("Error during get messages submission:", error);
+          });
+      };
+      fetchMessagesData();
       // console.log(selectedChannel);
-      setMessages([{ userName: "default user", text: "default text" }]);
+      // setMessages([{ userName: "default user", text: "default text" }]);
     }
   }, [selectedChannel]);
 
   const handleSubmit = async () => {
-    console.log(newMessage);
+    if (!newMessage) {
+      alert("Invalid inputs");
+      return;
+    }
+    // console.log(newMessage);
+    let dateStr = new Date().toLocaleString();
     await fetch("http://localhost:3001/sendMessage", {
       method: "POST",
       headers: {
@@ -26,6 +60,7 @@ const ChatMessages = (props) => {
       body: JSON.stringify({
         userName: user,
         message: newMessage,
+        timeStamp: dateStr,
         channelName: selectedChannel,
       }),
     })
@@ -38,7 +73,10 @@ const ChatMessages = (props) => {
       })
       .then((addMessageResponse) => {
         console.log(addMessageResponse);
-        setMessages([...messages, { userName: user, text: newMessage }]);
+        setMessages([
+          ...messages,
+          { userName: user, timeStamp: dateStr, message: newMessage },
+        ]);
       })
       .catch((error) => {
         console.error("Error during add messages submission:", error);
@@ -63,8 +101,11 @@ const ChatMessages = (props) => {
       <div className="messages-list">
         {messages.map((message, index) => (
           <div key={index} className="message">
-            <span className="user-id">{message.userName + ":"}</span>
-            <span className="message-text">{message.text}</span>
+            <span className="user-id">{message.userName}</span>
+            <span className="time-stamp">
+              {"(" + message.timeStamp + "): "}
+            </span>
+            <span className="message-text">{message.message}</span>
           </div>
         ))}
       </div>
