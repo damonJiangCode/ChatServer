@@ -31,6 +31,12 @@ const ChatMessages = ({ selectedChannel }) => {
           ? `messages in ${selectedChannel}`
           : "Select a channel"}
       </h3>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search..."
+        // onChange={...} //
+      />
       <div className="messages-list">
         {messages.map((message, index) => (
           <div key={index} className="message">
