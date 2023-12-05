@@ -1,6 +1,5 @@
 // ChatComments.js
 import "./ChatComments.css";
-// ChatComments.js
 
 import React, { useState, useEffect } from 'react';
 
@@ -27,7 +26,13 @@ const ChatComments = ({ selectedChannel }) => {
 
   return (
     <div className="chat-comments-container">
-      <h3 className="selected-channel">{selectedChannel ? `comments in ${selectedChannel}` : 'Select a channel'}</h3>
+      <h3 className="selected-channel">{selectedChannel ? `Comments In ${selectedChannel}` : 'Select a channel'}</h3>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search..."
+        // onChange={...} // 
+      />
       <div className="comments-list">
         {comments.map((comment, index) => (
           <div key={index} className="comment">
