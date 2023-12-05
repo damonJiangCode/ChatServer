@@ -110,6 +110,23 @@ app.post("/addchannel", (req, res) => {
   });
 });
 
+app.post("/sendMessage", (req, res) => {
+  const { userName, message, timeStamp, channelName } = req.body;
+
+  console.log(
+    "USERNAME: ",
+    userName,
+    "\nMESSAGE: ",
+    message,
+    "\nTIMESTAMP: ",
+    timeStamp,
+    "\nCHANNELNAME: ",
+    channelName
+  );
+  const addMessageSql =
+    "INSERT INTO chatmessages (userName, message, timeStamp, channelName) VALUES (?. ?, ?, ?)";
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

@@ -2,7 +2,7 @@
 import "./ChatPage.css";
 import React, { useState } from "react";
 import ChatChannels from "./ChatChannels";
-import ChatComments from "./ChatComments";
+import ChatMessages from "./ChatMessages";
 
 function ChatPage() {
   const [selectedChannel, setSelectedChannel] = useState(null);
@@ -18,8 +18,8 @@ function ChatPage() {
         <ChatChannels onSelect={handleChannelSelect} />
       </div>
 
-      <div className="chat-comments-container">
-        <ChatComments selectedChannel={selectedChannel} />
+      <div className="chat-messages-container">
+        <ChatMessages selectedChannel={selectedChannel} />
       </div>
     </div>
   );

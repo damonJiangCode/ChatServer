@@ -21,7 +21,7 @@ const ChatChannels = ({ onSelect }) => {
         if (response.status === 200) {
           const channelsFromServer = await response.json();
           console.log("Load Channels Successfully", channelsFromServer);
-          setChannels(channelsFromServer); // Assuming the response is an array of channels
+          setChannels(channelsFromServer);
         } else {
           console.error("Failed to Load Channels");
         }

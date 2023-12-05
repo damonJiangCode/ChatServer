@@ -5,7 +5,7 @@
 
   }
   
-  .comment {
+  .message {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px; 
@@ -18,17 +18,17 @@
     margin-right: 5px;
   }
   
-  .comment-text {
+  .message-text {
     flex-grow: 1;
     text-align: left;
   }
   
-  .new-comment {
+  .new-message {
     display: flex;
     margin-top: 20px;
   }
   
-  .new-comment-input {
+  .new-message-input {
     flex-grow: 1;
     padding: 10px;
     margin-right: 10px;
@@ -36,7 +36,7 @@
     border-radius: 4px;
   }
   
-  .submit-comment {
+  .submit-message {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
