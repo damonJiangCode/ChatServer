@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./Search.css";
 
-const Search = ({ selectedChannel }) => {
+const Search = () => {
+  const location = useLocation();
+  const selectedChannel = location.state && location.state.selectedChannel;
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredContent, setFilteredContent] = useState([]);
 
@@ -34,22 +37,25 @@ const Search = ({ selectedChannel }) => {
   };
 
   return (
-    <div className="search_input">
+    <div className="search-input">
       <input
         type="text"
-        dddd
         placeholder="Search term"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
       <button
+        className="search-message"
         onClick={() => {
           filterContent("message");
         }}
       >
         Search Message
       </button>
+
       <button
+        className="search-user"
         onClick={() => {
           filterContent("user");
         }}

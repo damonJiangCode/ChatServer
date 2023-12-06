@@ -42,6 +42,7 @@ function SignUp() {
         passwordCheck: "",
       });
     } else {
+      console.log(formData);
       try {
         const response = await fetch("http://localhost:3001/signup", {
           method: "POST",
@@ -55,7 +56,7 @@ function SignUp() {
           console.log("Data successfully submitted");
           alert(`Sign Up Successfully`);
           navigate("/chat", {
-            state: { username: formData.username, email: formData.email },
+            state: { username: formData.username },
           });
         } else {
           if (response.status === 400) {

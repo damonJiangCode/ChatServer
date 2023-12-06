@@ -26,7 +26,7 @@ db.connect((err) => {
 });
 
 app.post("/signup", (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, passwordCheck } = req.body;
 
   const checkUserSql = "SELECT * FROM users WHERE username = ?";
   db.query(checkUserSql, [username], (checkErr, checkResult) => {
@@ -39,16 +39,21 @@ app.post("/signup", (req, res) => {
       res.status(400).json({ error: "Username already exists" });
       return;
     }
-    const sql = "INSERT INTO users (username, email, pin) VALUES (?, ?, ?)";
-    db.query(sql, [username, email, password], (err, res) => {
-      if (err) {
-        console.error("Error inserting data into users table:", err);
-        res.status(500).json({ error: "Internal Server Error" });
-        return;
+    const insertSql =
+      "INSERT INTO users (username, email, pin) VALUES (?, ?, ?)";
+    db.query(
+      insertSql,
+      [username, email, password],
+      (insertErr, insertResult) => {
+        if (insertErr) {
+          console.error("Error inserting data into users table:", insertErr);
+          res.status(500).json({ error: "Internal Server Error" });
+          return;
+        }
+        console.log("Data inserted into users table:", insertResult);
+        res.status(200).json({ success: true });
       }
-      console.log("Data inserted into users table:", res);
-      res.status(200).json({ success: true });
-    });
+    );
   });
 });
 
@@ -79,9 +84,9 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/chatchannels", (req, res) => {
-  const data = req.body;
+  // const data = req.body;
 
-  console.log(data.action, "\n");
+  // console.log(data.action, "\n");
   const getChannelsSql = "SELECT channel FROM chatchannels";
   db.query(getChannelsSql, (dbErr, channels) => {
     if (dbErr) {
@@ -134,21 +139,83 @@ app.post("/sendMessage", (req, res) => {
 
 app.post("/getMessage", (req, res) => {
   const { channelName } = req.body;
-  console.log("CHANNELNAME FROM REACT: ", channelName);
+  // console.log("CHANNELNAME FROM REACT: ", channelName);
   const getMessageSql =
-    "SELECT userName, tStamp, message FROM chatMessage WHERE channelName = ? ORDER BY tStamp ASC";
+    "SELECT id, userName, tStamp, message, thumbUp, thumbDown FROM chatMessage WHERE channelName = ? ORDER BY tStamp ASC";
 
-  db.query(getMessageSql, [channelName], (getMEssageErr, getMessageRes) => {
-    if (getMEssageErr) {
-      console.log("Error: geting message:", getMEssageErr);
+  db.query(getMessageSql, [channelName], (getMessageErr, getMessageRes) => {
+    if (getMessageErr) {
+      console.log("Error: geting message:", getMessageErr);
       res.status(500).json({ error: "Internal Server Error" });
       return;
     } else {
-      console.log("Data from database (get message): ", getMessageRes);
+      // console.log("Data from database (get message): ", getMessageRes);
       res.status(200).json(getMessageRes);
     }
   });
 });
+
+app.post("/filterContent", (req, res) => {
+  const { searchTarget, term, channelName } = req.body;
+  let searchSql;
+  // console.log("FROM REACT: ", req.body);
+  if (searchTarget === "message") {
+    searchSql =
+      "SELECT userName, tStamp, message FROM chatMessage WHERE channelName = ? AND LOWER(message) LIKE LOWER(?) ORDER BY tStamp ASC";
+  } else if (searchTarget === "user") {
+    searchSql =
+      "SELECT userName, tStamp, message FROM chatMessage WHERE channelName = ? AND LOWER(userName) LIKE LOWER(?) ORDER BY tStamp ASC";
+  }
+  db.query(
+    searchSql,
+    [channelName, "%" + term + "%"],
+    (searchMessageErr, searchMessageRes) => {
+      if (searchMessageErr) {
+        console.log("Error: Searching Message:", searchMessageErr);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      } else {
+        // console.log("Data from database (search message): ", searchMessageRes);
+        res.status(200).json(searchMessageRes);
+      }
+    }
+  );
+});
+
+app.post("/up", (req, res) => {
+  const { messageID } = req.body;
+  // console.log("FROM REACT: ", req.body);
+  let messageUpSql =
+    "UPDATE chatMessage SET thumbUp = thumbUp + 1 WHERE id = ?";
+  db.query(messageUpSql, [messageID], (messageUpErr, messageUpRes) => {
+    if (messageUpErr) {
+      console.log("Error: Message Up:", messageUpErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    } else {
+      // console.log("Data from database (message up): ", messageUpRes);
+      res.status(200).json(messageUpRes);
+    }
+  });
+});
+
+app.post("/down", (req, res) => {
+  const { messageID } = req.body;
+  // console.log("FROM REACT: ", req.body);
+  let messageUpSql =
+    "UPDATE chatMessage SET thumbDown = thumbDown + 1 WHERE id = ?";
+  db.query(messageUpSql, [messageID], (messageDownErr, messageDownRes) => {
+    if (messageDownErr) {
+      console.log("Error: Message Down:", messageDownErr);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    } else {
+      console.log("Data from database (message down): ", messageDownRes);
+      res.status(200).json(messageDownRes);
+    }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

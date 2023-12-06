@@ -15,6 +15,7 @@
     margin-bottom: 10px;
     padding: 10px;
     border-bottom: 1px solid #eee;
+
 }
 
 .user-id {
@@ -56,9 +57,43 @@
     cursor: pointer;
 }
 
-.search-input {
-    padding: 8px;
-    border: 1px solid #ccc;
+.search-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
     border-radius: 4px;
     width: 200px;
+    margin-bottom: 10px;
+    margin-left: 1300px;
+}
+
+.reply {
+    padding: 3px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: none;
+    /* background-color: #4CAF50; */
+    background-color: #38a0d1;
+}
+
+.thumbs-up{
+    padding: 3px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: none;
+    /* background-color: #4CAF50; */
+    background-color: #38a0d1;
+    color: white;
+}
+
+.thumbs-down {
+    padding: 3px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    background-color: #38a0d1;
+    
+    
 }
